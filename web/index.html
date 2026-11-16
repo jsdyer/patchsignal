@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Look up CVEs, compare exploitation signals and explore the CISA known-exploited catalogue.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.first.org https://cveawg.mitre.org; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Patch Signal · CoolCode</title>
+<link rel="stylesheet" href="style.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body>
+<header class="mast"><nav class="wrap nav" aria-label="Main"><a class="brand" href="https://coolcode.ca/">$_ CoolCode.ca</a><a href="https://coolcode.ca/exploitgraveyard/">Exploit Graveyard ↗</a></nav>
+<div class="wrap hero"><h1>Patch <span>Signal</span></h1><p>Investigate any CVE, compare recent EPSS estimates, and check whether CISA lists it as known exploited.</p></div></header>
+<main id="main" class="wrap stack">
+<section class="panel stack" aria-labelledby="lookup-title"><h2 id="lookup-title">Investigate a CVE</h2>
+<form id="lookup"><div class="row"><label class="field">CVE identifier or known nickname<input name="query" maxlength="52" placeholder="CVE-2021-44228 or Log4Shell" autocomplete="off" required></label><button class="primary">Look up</button></div></form>
+<div class="chips" aria-label="Example lookups"><button data-cve="CVE-2021-44228">Log4Shell</button><button data-cve="CVE-2024-3400">PAN-OS</button><button data-cve="CVE-2024-3094">XZ Utils</button></div>
+<p class="status" id="lookup-status" role="status">Exact lookups contact the CVE Program and FIRST EPSS.</p>
+</section>
+<section id="detail" class="panel stack" aria-labelledby="cve-id" hidden>
+<div class="row spread"><h2 id="cve-id"></h2><span class="badge" id="kev-status"></span></div>
+<h3 id="cve-title" hidden></h3><p id="description"></p>
+<div class="links" id="record-links"></div>
+<div class="grid">
+<div class="card stack" id="cisa-card"><h3>CISA exploitation evidence</h3><p id="cisa-evidence" class="muted"></p><p id="cisa-action"></p></div>
+<div class="card stack"><h3>FIRST EPSS estimate</h3><p id="epss-summary" class="mono"></p><p class="muted">EPSS estimates exploitation in the next 30 days. Percentile compares the score against other CVEs.</p></div>
+</div>
+<div id="trend" class="stack" hidden>
+<h3>EPSS history · latest available days</h3><canvas id="chart" width="930" height="200" aria-label="Daily EPSS probability chart. Tabular values appear below." role="img"></canvas>
+<details><summary>Daily scores table</summary><div class="table" tabindex="0"><table><thead><tr><th>Date UTC</th><th>EPSS probability</th><th>Percentile</th></tr></thead><tbody id="history"></tbody></table></div></details>
+</div>
+<details id="affected" hidden><summary>Affected products and advisory references</summary><ul id="products" class="list"></ul><ul id="references" class="list"></ul></details>
+</section>
+<section class="panel stack" id="catalogue" aria-labelledby="browse-title">
+<div class="row spread"><h2 id="browse-title">Browse CISA’s known-exploited catalogue</h2><span class="badge" id="catalogue-count">Loading</span></div>
+<p id="sources-date" class="muted"></p>
+<div class="row"><label class="field">Vendor, product or nickname<input type="search" id="filter" placeholder="Apache, Fortinet, Exchange…" maxlength="80"></label><label class="field">Priority view<select id="priority"><option value="recent">Newest KEV additions</option><option value="score">Highest EPSS</option><option value="watch">EPSS at least 10%</option><option value="ransom">CISA ransomware flag</option></select></label></div>
+<p id="browse-status" class="status" role="status"></p>
+<div id="browse-table" class="table" tabindex="0" hidden><table><thead><tr><th scope="col">CVE / product</th><th scope="col">EPSS</th><th scope="col">KEV added</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="row spread" id="pagination" hidden><button id="previous">Previous</button><span id="page" class="muted"></span><button id="next">Next</button></div>
+</section>
+</main>
+<footer class="wrap foot"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA KEV</a><a href="https://www.first.org/epss/data">FIRST EPSS data</a><a href="https://www.cve.org/">CVE Program</a><a href="https://github.com/jsdyer/patchsignal">Source repository</a></footer>
+</body>
+</html>
