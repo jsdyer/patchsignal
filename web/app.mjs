@@ -2,7 +2,12 @@ import { cveOf, matchRows, probabilities, advisoryLink } from './model.mjs';
 
 const $ = id => document.getElementById(id);
 const form = $('lookup'), input = form.elements.query;
-const percent = new Intl.NumberFormat('en-CA', { style:'percent', maximumFractionDigits:2 });
+const percent = new Intl.NumberFormat('en-CA', { style:'percent', maximumFractionDigits:5 });
+function probability(value) {
+  if (value > 0 && value < .0000001) return '<0.00001%';
+  if (value < 1 && value > .9999999) return '>99.99999%';
+  return percent.format(value);
+}
 const count = new Intl.NumberFormat('en-CA');
 const pageSize = 25;
 let snapshot, catalogueError, state, activeID, currentPage = 0;
@@ -123,10 +128,10 @@ function chart(points) {
 function fillEpss(data, code) {
   const points = probabilities(data, code);
   const last = points.at(-1);
-  $('epss-summary').textContent = last ? percent.format(last.score) + ' probability · ' + percent.format(last.percentile) + ' percentile · ' + last.day : 'FIRST did not return an EPSS score for this CVE.';
+  $('epss-summary').textContent = last ? probability(last.score) + ' probability · ' + percent.format(last.percentile) + ' percentile · ' + last.day : 'FIRST did not return an EPSS score for this CVE.';
   $('history').replaceChildren(...[...points].reverse().map(pt => {
     const row = node('tr');
-    row.append(node('td',pt.day),node('td',percent.format(pt.score)),node('td',percent.format(pt.percentile)));
+    row.append(node('td',pt.day),node('td',probability(pt.score)),node('td',percent.format(pt.percentile)));
     return row;
   }));
   $('trend').hidden = !last;
@@ -167,7 +172,7 @@ async function lookup(value) {
     if (epss.status === 'rejected') throw epss.reason;
     fillEpss(epss.value, code);
   } catch {
-    $('epss-summary').textContent = row?.score ? 'Live scores unavailable · snapshot estimate ' + percent.format(row.score[0]) + ' · ' + snapshot.epssDate : 'Live FIRST EPSS scores unavailable.';
+    $('epss-summary').textContent = row?.score ? 'Live scores unavailable · snapshot estimate ' + probability(row.score[0]) + ' · ' + snapshot.epssDate : 'Live FIRST EPSS scores unavailable.';
   }
   status('Sources checked. See each panel for coverage.');
 }
@@ -189,7 +194,7 @@ function renderBrowse() {
     button.addEventListener('click',()=>{ lookup(row.id); $('lookup-title').scrollIntoView({block:'start'}); input.focus({preventScroll:true}); });
     const name = node('td');
     name.append(button,node('span',row.vendor + ' · ' + row.product,'vendor'));
-    tr.append(name,node('td',row.score ? percent.format(row.score[0]) : 'Unavailable'),node('td',row.added));
+    tr.append(name,node('td',row.score ? probability(row.score[0]) : 'Unavailable'),node('td',row.added));
     return tr;
   }));
   $('browse-table').hidden = !shown.length;
