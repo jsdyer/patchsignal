@@ -11,9 +11,10 @@
 </head>
 <body>
 <header class="mast"><nav class="wrap nav" aria-label="Main"><a class="brand" href="https://coolcode.ca/">$_ CoolCode.ca</a><a href="https://coolcode.ca/exploitgraveyard/">Exploit Graveyard ↗</a></nav>
-<div class="wrap hero"><h1>Patch <span>Signal</span></h1><p>Investigate any CVE, compare recent EPSS estimates, and check whether CISA lists it as known exploited.</p></div></header>
+<div class="wrap hero"><h1>Patch <span>Signal</span></h1><p>Review a CVE before scheduling a patch. Compare the affected product versions, FIRST’s recent probability estimates and CISA’s evidence of exploitation.</p></div></header>
 <main id="main" class="wrap stack">
 <section class="panel stack" aria-labelledby="lookup-title"><h2 id="lookup-title">Investigate a CVE</h2>
+<p>Start with a CVE from your software inventory or a vendor bulletin. For Canadian advisory dates and wording, <a href="../exploitgraveyard/">search Cyber Centre notices in The Exploit Graveyard</a>.</p>
 <form id="lookup"><div class="row"><label class="field">CVE identifier or known nickname<input name="query" maxlength="52" placeholder="CVE-2021-44228 or Log4Shell" autocomplete="off" required></label><button class="primary">Look up</button></div></form>
 <div class="chips" aria-label="Example lookups"><button data-cve="CVE-2021-44228">Log4Shell</button><button data-cve="CVE-2024-3400">PAN-OS</button><button data-cve="CVE-2024-3094">XZ Utils</button></div>
 <p class="status" id="lookup-status" role="status">Exact lookups contact the CVE Program and FIRST EPSS.</p>

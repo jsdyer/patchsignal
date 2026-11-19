@@ -152,7 +152,7 @@ async function lookup(value) {
   $('cve-id').textContent = code;
   $('description').textContent = 'Loading CVE record…';
   $('epss-summary').textContent = 'Loading FIRST EPSS scores…';
-  $('record-links').replaceChildren(link('Official CVE record ↗','https://www.cve.org/CVERecord?id=' + code),link('CISA catalogue ↗','https://www.cisa.gov/known-exploited-vulnerabilities-catalog'));
+  $('record-links').replaceChildren(link('Official CVE record ↗','https://www.cve.org/CVERecord?id=' + code),link('CISA catalogue ↗','https://www.cisa.gov/known-exploited-vulnerabilities-catalog'),link('Canadian notices citing this CVE ↗','../exploitgraveyard/?ca=' + encodeURIComponent(code)));
   fillEvidence(code);
   status('Checking the CVE Program and FIRST EPSS…');
   const [cve, epss] = await Promise.allSettled([
