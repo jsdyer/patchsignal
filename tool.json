@@ -1,0 +1,56 @@
+{
+  "id": "patchsignal",
+  "title": "Patch Signal",
+  "description": "Look up a CVE from your software inventory, check affected versions and follow patch guidance.",
+  "category": "security",
+  "tags": [
+    "cisa",
+    "kev",
+    "epss",
+    "cve",
+    "patch",
+    "zero",
+    "day",
+    "vulnerability"
+  ],
+  "icon": "crosshair",
+  "url": "/patchsignal/",
+  "source": "https://github.com/jsdyer/patchsignal",
+  "hosting": "project",
+  "access": "browser",
+  "data_info": {
+    "mode": "mixed",
+    "detail": "CVE records, CISA’s exploited-vulnerability catalogue and FIRST’s EPSS scores describe each identifier.",
+    "cadence": "Daily",
+    "probes": [
+      {
+        "url": "https://coolcode.ca/patchsignal/kev.json",
+        "path": [
+          "built"
+        ],
+        "label": "Snapshot generated",
+        "count_at": {
+          "path": [
+            "rows"
+          ],
+          "unit": "KEV entries",
+          "measure": "length"
+        }
+      },
+      {
+        "url": "https://coolcode.ca/patchsignal/kev.json",
+        "path": [
+          "kevDate"
+        ],
+        "label": "Source published"
+      },
+      {
+        "url": "https://coolcode.ca/patchsignal/kev.json",
+        "path": [
+          "epssDate"
+        ],
+        "label": "EPSS score date"
+      }
+    ]
+  }
+}
