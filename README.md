@@ -3,8 +3,10 @@
 Investigate a public CVE through official CVE Program records and FIRST EPSS scores. The catalogue view is limited to CISA's known-exploited vulnerabilities and can filter by product, score threshold, or ransomware flag. A standalone lookup works for a CVE outside that catalogue. Lookup nicknames are a small curated set.
 
 <!-- coolcode:guide -->
-Start with a CVE from your inventory. Compare affected versions, CISA’s required action when listed, and changes in FIRST’s EPSS estimate. The Canadian notices link carries that identifier to [The Exploit Graveyard](https://coolcode.ca/exploitgraveyard/) to find Cyber Centre alerts and advisories that cite it.
+Start with a CVE from your inventory. Compare affected versions, CISA’s required action when listed, and changes in FIRST’s EPSS estimate. The Canadian notices link carries that identifier to The Exploit Graveyard to find Cyber Centre alerts and advisories that cite it.
 <!-- /coolcode:guide -->
+
+[Search Canadian notices in The Exploit Graveyard](https://coolcode.ca/exploitgraveyard/).
 
 ```sh
 python3 scripts/build.py
