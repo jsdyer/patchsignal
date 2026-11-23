@@ -1,4 +1,5 @@
 import { cveOf, matchRows, probabilities, advisoryLink } from './model.mjs';
+import {inventoryMatches} from './inventory.mjs';
 
 const $ = id => document.getElementById(id);
 const form = $('lookup'), input = form.elements.query;
@@ -210,3 +211,15 @@ $('previous').addEventListener('click',()=>{if(currentPage){currentPage--;render
 $('next').addEventListener('click',()=>{currentPage++;renderBrowse();});
 const shared = new URLSearchParams(location.hash.slice(1)).get('cve');
 if (shared && cveOf(shared)) input.value = cveOf(shared);
+
+$('inventory-form').addEventListener('submit',async event=>{
+ event.preventDefault();await localData;
+ try{
+  if(!snapshot)throw Error('The KEV snapshot could not load. Retry after reloading the page.');
+  const matches=inventoryMatches($('inventory-input').value,snapshot.rows);
+  $('inventory-status').textContent=matches.filter(r=>r.kev).length+' of '+matches.length+' identifiers appear in CISA KEV ('+snapshot.kevDate.slice(0,10)+'). Absence from KEV does not mean safe. This matches identifiers, not installed software versions.';
+  $('inventory-rows').replaceChildren(...matches.map(({id,kev})=>{
+   const row=node('tr'),cell=node('td'),control=node('button',id);control.type='button';control.addEventListener('click',()=>lookup(id));cell.append(control);row.append(cell,node('td',kev?'Known exploited':'Not in this snapshot'),node('td',kev?kev.vendor+' · '+kev.product:'—'),node('td',kev?.action||'Review the vendor advisory and affected versions.'));return row;
+  }));
+ }catch(error){$('inventory-status').textContent=error.message;$('inventory-rows').replaceChildren();}
+});

@@ -1,7 +1,7 @@
 {
   "id": "patchsignal",
   "title": "Patch Signal",
-  "description": "Look up a CVE from your software inventory, check affected versions and follow patch guidance.",
+  "description": "Check CVE shortlists against known exploitation, inspect affected versions and follow patch guidance.",
   "category": "security",
   "tags": [
     "cisa",
@@ -20,7 +20,7 @@
   "access": "browser",
   "data_info": {
     "mode": "mixed",
-    "detail": "CVE records, CISA’s exploited-vulnerability catalogue and FIRST’s EPSS scores describe each identifier.",
+    "detail": "CISA KEV shortlist matching runs locally; individual CVE records and FIRST EPSS estimates load on request.",
     "cadence": "Daily",
     "probes": [
       {
